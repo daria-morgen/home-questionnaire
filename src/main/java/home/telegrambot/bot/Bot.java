@@ -1,5 +1,8 @@
 package home.telegrambot.bot;
 
+import home.telegrambot.parser.BotMessageParser;
+import home.telegrambot.parser.MessageController;
+import home.telegrambot.parser.MessageParser;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -10,6 +13,7 @@ public class Bot extends TelegramLongPollingBot {
     private String botUsername;
 
     private String botToken;
+
 
     /**
      * Метод для приема сообщений.
@@ -27,10 +31,14 @@ public class Bot extends TelegramLongPollingBot {
      * @param s Строка, которую необходимот отправить в качестве сообщения.
      */
     public synchronized void sendMsg(String chatId, String s) {
+
+        MessageController messageController = new MessageController();
+        String newMessage = messageController.manageMessage(s);
+
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);
-        sendMessage.setText(s);
+        sendMessage.setText(newMessage);
         try {
             sendMessage(sendMessage);
         } catch (TelegramApiException e) {
