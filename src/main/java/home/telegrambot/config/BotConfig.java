@@ -18,7 +18,7 @@ public class BotConfig {
     private String botToken;
 
     @Bean
-    public void configureBotSource() {
+    public String configureBotSource() {
         ApiContextInitializer.init();
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
 
@@ -27,6 +27,7 @@ public class BotConfig {
         } catch (TelegramApiRequestException e) {
             e.printStackTrace();
         }
-    }
 
+        return "SUCCESS";
+    }
 }
