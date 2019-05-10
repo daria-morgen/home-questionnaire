@@ -1,4 +1,4 @@
-package home.telegrambot.database;//package com.morgen.model;
+package home.telegrambot.model;//package com.morgen.model;
 
 
 import javax.persistence.*;

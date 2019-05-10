@@ -1,4 +1,4 @@
-package home.telegrambot.database;
+package home.telegrambot.model;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -22,9 +22,9 @@ public class Word {
     public Word() {
     }
 
-    public Word(String cir_name, String answer, Theme theme) {
+    public Word(String cir_name, String latin_name, Theme theme) {
         this.cir_name = cir_name;
-        this.latin_name = answer;
+        this.latin_name = latin_name;
         this.theme = theme;
     }
 

@@ -1,8 +1,6 @@
 package home.telegrambot.bot;
 
-import home.telegrambot.parser.BotMessageParser;
-import home.telegrambot.parser.MessageController;
-import home.telegrambot.parser.MessageParser;
+import home.telegrambot.service.PersistenceService;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -14,6 +12,7 @@ public class Bot extends TelegramLongPollingBot {
 
     private String botToken;
 
+    private PersistenceService persistenceService;
 
     /**
      * Метод для приема сообщений.
@@ -32,13 +31,11 @@ public class Bot extends TelegramLongPollingBot {
      */
     public synchronized void sendMsg(String chatId, String s) {
 
-        MessageController messageController = new MessageController();
-        String newMessage = messageController.manageMessage(s);
-
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);
-        sendMessage.setText(newMessage);
+        sendMessage.setText(persistenceService.manageMessage(s));
+
         try {
             sendMessage(sendMessage);
         } catch (TelegramApiException e) {
@@ -64,10 +61,13 @@ public class Bot extends TelegramLongPollingBot {
         return botToken;
     }
 
-    public static Bot getBot(String botUsername, String botToken){
+    public static Bot getBot(String botUsername, String botToken
+            ,PersistenceService persistenceService
+    ){
         Bot bot = new Bot();
         bot.botUsername=botUsername;
         bot.botToken=botToken;
+        bot.persistenceService=persistenceService;
         return bot;
     }
 }

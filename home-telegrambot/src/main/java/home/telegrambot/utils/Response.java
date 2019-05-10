@@ -1,5 +1,6 @@
 package home.telegrambot.utils;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,4 +26,19 @@ public class Response {
         this.result = result;
     }
 
+    public ResponseStatus getStatus() {
+        return status;
+    }
+
+    public List<ResponseError> getErrors() {
+        return errors;
+    }
+
+    public Object getResult() {
+        return result;
+    }
+
+    public void setResult(Object result) {
+        this.result = result;
+    }
 }
