@@ -7,7 +7,6 @@ import home.telegrambot.parser.MessageParser;
 import home.telegrambot.repository.ThemeRepository;
 import home.telegrambot.repository.WordRepository;
 import home.telegrambot.service.PersistenceService;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
