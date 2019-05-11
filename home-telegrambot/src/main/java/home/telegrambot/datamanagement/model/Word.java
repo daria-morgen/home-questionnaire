@@ -1,4 +1,4 @@
-package home.telegrambot.model;
+package home.telegrambot.datamanagement.model;
 
 import javax.persistence.*;
 import java.util.Objects;

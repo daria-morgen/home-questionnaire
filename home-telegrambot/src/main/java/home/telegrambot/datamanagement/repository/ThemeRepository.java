@@ -1,6 +1,6 @@
-package home.telegrambot.repository;
+package home.telegrambot.datamanagement.repository;
 
-import home.telegrambot.model.Theme;
+import home.telegrambot.datamanagement.model.Theme;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

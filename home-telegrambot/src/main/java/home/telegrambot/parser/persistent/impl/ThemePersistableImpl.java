@@ -1,7 +1,7 @@
 package home.telegrambot.parser.persistent.impl;
 
 
-import home.telegrambot.model.Theme;
+import home.telegrambot.datamanagement.model.Theme;
 import home.telegrambot.parser.persistent.Persistable;
 import org.springframework.data.repository.CrudRepository;
 
