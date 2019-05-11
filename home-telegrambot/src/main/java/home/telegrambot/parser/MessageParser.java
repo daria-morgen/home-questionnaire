@@ -1,10 +1,10 @@
 package home.telegrambot.parser;
 
 
-import home.telegrambot.utils.Response;
+import home.telegrambot.parser.persistent.Persistable;
 
 public interface MessageParser {
 
-    Response parse(String message);
+    Persistable parse(String message);
 
 }

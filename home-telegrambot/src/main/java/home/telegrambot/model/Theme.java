@@ -15,8 +15,7 @@ public class Theme {
     @Column(name="name")
     String name;
 
-    public Theme(Long id, String name) {
-        this.id = id;
+    public Theme(String name) {
         this.name = name;
     }
 

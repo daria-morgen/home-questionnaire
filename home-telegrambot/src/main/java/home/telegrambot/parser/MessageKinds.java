@@ -2,6 +2,14 @@ package home.telegrambot.parser;
 
 public enum MessageKinds {
 
+    WORD(
+            "word"
+    ),
+
+    THEME(
+            "theme"
+    ),
+
     SAVE(
         "save"
     ),
