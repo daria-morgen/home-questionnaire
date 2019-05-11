@@ -9,9 +9,9 @@
         </layout>
     </appender>
 
-    <logger name="org.springframework" level="debug" additivity="false">
-        <appender-ref ref="STDOUT" />
-    </logger>
+    <!--<logger name="org.springframework" level="debug" additivity="false">-->
+        <!--<appender-ref ref="STDOUT" />-->
+    <!--</logger>-->
 
     <logger name="home.telegrambot" level="debug" additivity="false">
         <appender-ref ref="STDOUT" />
