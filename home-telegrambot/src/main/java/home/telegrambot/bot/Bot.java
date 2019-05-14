@@ -1,6 +1,9 @@
 package home.telegrambot.bot;
 
+import home.telegrambot.parser.impl.BotMessageParser;
 import home.telegrambot.service.MessageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -8,6 +11,8 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 
 public class Bot extends TelegramLongPollingBot {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(Bot.class);
 
     private String botUsername;
 
@@ -21,6 +26,9 @@ public class Bot extends TelegramLongPollingBot {
      */
     @Override
     public void onUpdateReceived(Update update) {
+        LOGGER.info("author : "+update.getMessage().getAuthorSignature());
+        LOGGER.info("chat id: "+update.getMessage().getChatId().toString());
+        LOGGER.info("message id: "+update.getMessage().getMessageId().toString());
         String message = update.getMessage().getText();
         sendMsg(update.getMessage().getChatId().toString(), message);
 
