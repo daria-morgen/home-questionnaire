@@ -3,23 +3,21 @@ package home.telegrambot.parser.persistent.impl;
 
 import home.telegrambot.datamanagement.model.Theme;
 import home.telegrambot.parser.persistent.Persistable;
-import org.springframework.data.repository.CrudRepository;
+import home.telegrambot.parser.persistent.RepositoryFactory;
 
 public class ThemePersistableImpl implements Persistable {
 
-    private String name;
+    private Theme theme;
 
-    private CrudRepository repositoryFactory;
+    private RepositoryFactory repositoryFactory;
 
-    public ThemePersistableImpl(String name, CrudRepository repositoryFactory) {
-        this.name = name;
+    public ThemePersistableImpl(String name, RepositoryFactory repositoryFactory) {
+        theme=new Theme(name);
         this.repositoryFactory = repositoryFactory;
     }
 
     @Override
     public void persist() {
-
-        repositoryFactory.save(new Theme(this.name));
-
+        repositoryFactory.getRepository(theme).save(theme);
     }
 }

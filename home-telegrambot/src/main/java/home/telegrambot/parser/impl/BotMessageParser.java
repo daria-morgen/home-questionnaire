@@ -43,10 +43,10 @@ public class BotMessageParser implements MessageParser {
                 case "word":
                     return new WordPersistableImpl(megs.get(1),
                             megs.get(2),
-                            repositoryFactory.getRepository(MessageKinds.WORD));
+                            repositoryFactory);
                 case "theme":
                     return new ThemePersistableImpl(megs.get(1),
-                            repositoryFactory.getRepository(MessageKinds.THEME));
+                            repositoryFactory);
                 default:
                     return null;
             }
@@ -54,4 +54,5 @@ public class BotMessageParser implements MessageParser {
 
         return null;
     }
+
 }

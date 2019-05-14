@@ -3,38 +3,32 @@ package home.telegrambot.parser.persistent.impl;
 import home.telegrambot.datamanagement.model.Theme;
 import home.telegrambot.datamanagement.model.Word;
 import home.telegrambot.parser.persistent.Persistable;
+import home.telegrambot.parser.persistent.RepositoryFactory;
 import org.springframework.data.repository.CrudRepository;
 
 
 public class WordPersistableImpl implements Persistable {
 
-    private String cir_name;
+    private Word word;
 
-    private String latin_name;
-
-    private Theme theme;
-
-    private CrudRepository repositoryFactory;
+    private RepositoryFactory repositoryFactory;
 
     public WordPersistableImpl(String cir_name,
                                String latin_name,
                                Theme theme,
-                               CrudRepository repositoryFactory) {
-        this.cir_name = cir_name;
-        this.latin_name = latin_name;
-        this.theme = theme;
+                               RepositoryFactory repositoryFactory) {
+
+        word = new Word(cir_name,latin_name,theme);
         this.repositoryFactory = repositoryFactory;
     }
 
-    public WordPersistableImpl(String cir_name, String latin_name, CrudRepository repositoryFactory) {
-        this.cir_name = cir_name;
-        this.latin_name = latin_name;
+    public WordPersistableImpl(String cir_name, String latin_name, RepositoryFactory repositoryFactory) {
+        word = new Word(cir_name,latin_name);
         this.repositoryFactory = repositoryFactory;
     }
 
     @Override
     public void persist() {
-        repositoryFactory.save(
-                new Word(this.cir_name,this.latin_name,this.theme));
+        repositoryFactory.getRepository(word).save(word);
     }
 }

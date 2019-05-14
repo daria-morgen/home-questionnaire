@@ -28,6 +28,11 @@ public class Word {
         this.theme = theme;
     }
 
+    public Word(String cir_name, String latin_name) {
+        this.cir_name = cir_name;
+        this.latin_name = latin_name;
+    }
+
     public void setId(long id) {
         this.id = id;
     }

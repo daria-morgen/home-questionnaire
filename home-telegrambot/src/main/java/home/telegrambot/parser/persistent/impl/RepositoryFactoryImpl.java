@@ -1,5 +1,7 @@
 package home.telegrambot.parser.persistent.impl;
 
+import home.telegrambot.datamanagement.model.Theme;
+import home.telegrambot.datamanagement.model.Word;
 import home.telegrambot.parser.MessageKinds;
 import home.telegrambot.datamanagement.repository.ThemeRepository;
 import home.telegrambot.datamanagement.repository.WordRepository;
@@ -22,15 +24,13 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
     }
 
 
-    public CrudRepository getRepository(MessageKinds messageKinds){
-
-        switch (messageKinds) {
-            case WORD:
+    public CrudRepository getRepository(Word word){
                 return wordRepository;
-            case THEME:
-                return themeRepository;
-            default:
-                return null;
-        }
+
+    };
+
+    public CrudRepository getRepository(Theme word){
+        return themeRepository;
+
     };
 }
