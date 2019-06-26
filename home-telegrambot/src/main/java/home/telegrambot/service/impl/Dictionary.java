@@ -5,23 +5,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Map;
 
 public class Dictionary {
 
-    public static List<String> dictionary;
+    private static Dictionary dictionary;
+
+    private  List<String> dictionaryList;
+
+    private Map<String,String> dictionaryMap;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DictionaryInitialization.class);
 
     private Dictionary(){}
 
-    public static List<String> getDictionary(String dictionaryFileName){
-        if(dictionary == null) {
-            dictionary = new ArrayList<>();
+    public static Dictionary getDictionary(String dictionaryFileName){
 
+        if(dictionary == null) {
+            dictionary = new Dictionary();
 
             File file = new File(dictionaryFileName);
 
@@ -37,10 +40,10 @@ public class Dictionary {
                 while (true) {
                         assert br != null;
                         if ((st = br.readLine()).trim().equals("</xdxf>")) {
-                            LOGGER.info(new Date() + ": Dictionary read break. Dictionary size is: "+dictionary.size());
+                            LOGGER.info(new Date() + ": Dictionary read break. Dictionary size is: "+dictionary.dictionaryList.size());
                             break;
                         }
-                        dictionary.add(st);
+                    dictionary.dictionaryList.add(st);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -54,8 +57,18 @@ public class Dictionary {
             }
 
         }
+
         return dictionary;
     }
 
+    //todo add impl.
+    public String getRandomWord(){
+        return dictionaryList.get(0);
+    }
+
+    //todo add impl.
+    public String getWordTranslation(String translatableWord){
+        return dictionaryMap.get(translatableWord);
+    }
 
 }

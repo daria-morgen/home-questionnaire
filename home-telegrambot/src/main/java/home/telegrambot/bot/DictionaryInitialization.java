@@ -16,7 +16,7 @@ public class DictionaryInitialization {
         Logger LOGGER = LoggerFactory.getLogger(DictionaryInitialization.class);
         LOGGER.info(new Date() + ": Dictionary initialization start.");
 
-        dictionaryService.initDictionary(Dictionary.getDictionary(appProperties.getBotDictionaryFileName()));
+        dictionaryService.initDictionary(appProperties.getBotDictionaryFileName());
 
         LOGGER.info(new Date() + ": Dictionary initialization end.");
 

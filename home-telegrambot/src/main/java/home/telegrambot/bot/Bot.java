@@ -1,6 +1,5 @@
 package home.telegrambot.bot;
 
-import home.telegrambot.parser.impl.BotMessageParser;
 import home.telegrambot.service.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,9 +43,7 @@ public class Bot extends TelegramLongPollingBot {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(chatId);
-        sendMessage.setText(messageService.manageMessage(s));
-
-
+        sendMessage.setText(messageService.getStringRequest(s));
         try {
             sendMessage(sendMessage);
         } catch (TelegramApiException e) {
