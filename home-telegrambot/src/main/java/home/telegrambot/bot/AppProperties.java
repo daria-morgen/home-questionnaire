@@ -12,11 +12,18 @@ public class AppProperties {
     @Value("${botSource.botToken:token}")
     private String botToken;
 
+    @Value("${botSource.botDictionaryFileName:botDictionaryFileName}")
+    private String botDictionaryFileName;
+
     public String getBotUsername() {
         return botUsername;
     }
 
     public String getBotToken() {
         return botToken;
+    }
+
+    public String getBotDictionaryFileName() {
+        return botDictionaryFileName;
     }
 }
