@@ -1,6 +1,5 @@
 package home.telegrambot.parser.impl;
 
-import home.telegrambot.parser.MessageKinds;
 import home.telegrambot.parser.MessageParser;
 import home.telegrambot.parser.persistent.Persistable;
 import home.telegrambot.parser.persistent.RepositoryFactory;

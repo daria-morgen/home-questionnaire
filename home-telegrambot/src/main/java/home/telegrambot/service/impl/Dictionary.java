@@ -17,7 +17,7 @@ public class Dictionary {
 
     private Map<String,String> dictionaryMap;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DictionaryInitialization.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Dictionary.class);
 
     private Dictionary(){}
 
