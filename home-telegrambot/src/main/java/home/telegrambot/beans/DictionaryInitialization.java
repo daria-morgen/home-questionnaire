@@ -1,13 +1,12 @@
-package home.telegrambot.bot;
+package home.telegrambot.beans;
 
+import home.telegrambot.properties.AppProperties;
 import home.telegrambot.service.DictionaryService;
-import home.telegrambot.service.impl.Dictionary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-
 
 @Component
 public class DictionaryInitialization {

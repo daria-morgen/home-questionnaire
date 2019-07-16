@@ -1,6 +1,5 @@
 package home.telegrambot.service.impl;
 
-import home.telegrambot.bot.DictionaryInitialization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
