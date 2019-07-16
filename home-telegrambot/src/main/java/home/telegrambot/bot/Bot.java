@@ -1,6 +1,8 @@
 package home.telegrambot.bot;
 
 import home.telegrambot.service.MessageService;
+import org.apache.http.HttpHost;
+import org.apache.http.client.config.RequestConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
@@ -16,6 +18,8 @@ public class Bot extends TelegramLongPollingBot {
     private String botUsername;
 
     private String botToken;
+
+    private RequestConfig requestConfig;
 
     private MessageService messageService;
 
@@ -51,28 +55,31 @@ public class Bot extends TelegramLongPollingBot {
         }
     }
 
-    /**
-     * Метод возвращает имя бота, указанное при регистрации.
-     * @return имя бота
-     */
+
     @Override
     public String getBotUsername() {
         return botUsername;
     }
 
-    /**
-     * Метод возвращает token бота для связи с сервером Telegram
-     * @return token для бота
-     */
     @Override
     public String getBotToken() {
         return botToken;
     }
 
     public static Bot getBot(String botUsername, String botToken
-            ,MessageService messageService
+            ,MessageService messageService, String host, int port, int timeout
     ){
         Bot bot = new Bot();
+
+        RequestConfig requestConfig = RequestConfig.custom()
+                .setProxy(new HttpHost(host, port))
+                        .setSocketTimeout(timeout)
+                        .setConnectionRequestTimeout(timeout)
+                        .setConnectTimeout(timeout)
+                        .build();
+
+        bot.getOptions().setRequestConfig(requestConfig);
+
         bot.botUsername=botUsername;
         bot.botToken=botToken;
         bot.messageService=messageService;

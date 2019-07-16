@@ -15,6 +15,15 @@ public class AppProperties {
     @Value("${botSource.botDictionaryFileName:botDictionaryFileName}")
     private String botDictionaryFileName;
 
+    @Value("${botSource.proxyHost:host}")
+    private String proxyHost;
+
+    @Value("${botSource.proxyPort:port}")
+    private int proxyPort;
+
+    @Value("${botSource.timeout:timeout}")
+    private int timeout;
+
     public String getBotUsername() {
         return botUsername;
     }
@@ -25,5 +34,17 @@ public class AppProperties {
 
     public String getBotDictionaryFileName() {
         return botDictionaryFileName;
+    }
+
+    public String getProxyHost() {
+        return proxyHost;
+    }
+
+    public int getProxyPort() {
+        return proxyPort;
+    }
+
+    public int getTimeout() {
+        return timeout;
     }
 }

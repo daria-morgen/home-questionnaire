@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,9 @@ public class Dictionary {
 
         if(dictionary == null) {
             dictionary = new Dictionary();
+
+            dictionary.dictionaryList =  new ArrayList<>();
+
 
             File file = new File(dictionaryFileName);
 
