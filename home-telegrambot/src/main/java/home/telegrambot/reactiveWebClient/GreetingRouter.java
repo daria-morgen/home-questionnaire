@@ -11,6 +11,10 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 @Configuration
 public class GreetingRouter {
 
+	/*
+	 * In this application, we use a router to handle the only route we expose ("/hello").
+	 */
+
 	@Bean
 	public RouterFunction<ServerResponse> route(GreetingHandler greetingHandler) {
 
