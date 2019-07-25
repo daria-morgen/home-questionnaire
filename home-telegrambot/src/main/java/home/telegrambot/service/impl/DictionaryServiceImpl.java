@@ -18,7 +18,11 @@ public class DictionaryServiceImpl implements LibraryService {
 
     private AppProperties properties;
 
-    private List<String> dictionaryList;
+    private List<String> dictionaryXMLList;
+    private boolean isHeadTag;
+    private StringBuilder currentLine;
+
+    private List<StringBuilder> dictionaryList;
 
     private Map<String, String> dictionaryMap;
 
@@ -43,11 +47,14 @@ public class DictionaryServiceImpl implements LibraryService {
         try {
             while (true) {
                 assert br != null;
-                if ((st = br.readLine()).trim().equals("</xdxf>")) {
+                if (!(st = br.readLine()).trim().equals("</xdxf>")) {
+                    parseLine(st);
+                }else
+                {
                     LOGGER.info(new Date() + ": Dictionary read break. Dictionary size is: " + dictionaryList.size());
                     break;
                 }
-                dictionaryList.add(st);
+                //dictionaryList.add(st);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -59,11 +66,46 @@ public class DictionaryServiceImpl implements LibraryService {
                 e.printStackTrace();
             }
         }
+
+        prepareDictionaryMap();
         LOGGER.info(new Date() + ": Dictionary initialization end.");
+
+    }
+
+
+
+    private void parseLine(String line){
+
+        if (isHeadTag){
+            currentLine.append(line.trim());
+        }
+        if(line.contains("<ar>")){
+            currentLine=new StringBuilder();
+            isHeadTag=true;
+            currentLine.append(line.trim());
+
+        }
+        if(line.contains("</ar>")){
+            isHeadTag=false;
+            currentLine.append(line.trim());
+            dictionaryList.add(currentLine);
+        }
 
 
     }
 
+    private void prepareDictionaryMap() {
+
+    }
+
+    private String getRussianWord(String st){
+
+        return st;
+    }
+    private String getEnglishWord(String st){
+
+        return st;
+    }
 
     @Override
     public Mono<String> getRandomWord() {
