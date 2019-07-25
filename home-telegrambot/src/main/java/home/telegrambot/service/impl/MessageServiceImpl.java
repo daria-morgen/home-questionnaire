@@ -2,7 +2,7 @@ package home.telegrambot.service.impl;
 
 
 import home.telegrambot.parser.MessageParser;
-import home.telegrambot.service.DictionaryService;
+import home.telegrambot.service.LibraryService;
 import home.telegrambot.service.MessageService;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +11,11 @@ public class MessageServiceImpl implements MessageService {
 
     private MessageParser messageParser;
 
-    private DictionaryService dictionaryService;
+    private LibraryService libraryService;
 
-    public MessageServiceImpl(MessageParser messageParser, DictionaryService dictionaryService) {
+    public MessageServiceImpl(MessageParser messageParser, LibraryService libraryService) {
         this.messageParser = messageParser;
-        this.dictionaryService=dictionaryService;
+        this.libraryService = libraryService;
     }
 
     //todo think about parser
