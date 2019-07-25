@@ -64,6 +64,10 @@ public class Dictionary {
         return dictionary;
     }
 
+    public static Dictionary getDictionary(){
+        return dictionary;
+    }
+
     //todo add impl.
     public String getRandomWord(){
         return dictionaryList.get(0);

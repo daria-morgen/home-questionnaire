@@ -1,7 +1,8 @@
 package home.telegrambot.datamanagement.model;
 
+import com.google.common.base.Objects;
+
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "word")
@@ -65,39 +66,21 @@ public class Word {
         this.theme = theme;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Word other = (Word) obj;
-        if (this.cir_name != other.cir_name) {
-            return false;
-        }
-        if (!Objects.equals(this.cir_name, other.cir_name)) {
-            return false;
-        }
-        if (!Objects.equals(this.theme, other.theme)) {
-            return false;
-        }
-        return Objects.equals(this.id, other.id);
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Word word = (Word) o;
+        return Objects.equal(id, word.id) &&
+                Objects.equal(cir_name, word.cir_name) &&
+                Objects.equal(latin_name, word.latin_name) &&
+                Objects.equal(theme, word.theme);
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.id);
-        hash = 79 * hash + Objects.hashCode(this.cir_name);
-        hash = 79 * hash + Objects.hashCode(this.latin_name);
-        hash = 79 * hash+Objects.hashCode(this.theme);
-        return hash;
+        return Objects.hashCode(id, cir_name, latin_name, theme);
     }
 
     @Override
