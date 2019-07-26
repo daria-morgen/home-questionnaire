@@ -17,15 +17,8 @@ import java.util.stream.Stream;
 @Service
 public class BotMessageParser implements MessageParser {
 
-
+    //todo think about parser
     private final Logger LOGGER = LoggerFactory.getLogger(BotMessageParser.class);
-
-    private RepositoryFactory repositoryFactory;
-
-    public BotMessageParser(RepositoryFactory repositoryFactory) {
-
-        this.repositoryFactory = repositoryFactory;
-    }
 
     @Override
     public Persistable parse(String message) {
@@ -40,12 +33,9 @@ public class BotMessageParser implements MessageParser {
 
             switch (megs.get(0)) {
                 case "word":
-                    return new WordPersistableImpl(megs.get(1),
-                            megs.get(2),
-                            repositoryFactory);
+                    return null;
                 case "theme":
-                    return new ThemePersistableImpl(megs.get(1),
-                            repositoryFactory);
+                    return null;
                 default:
                     return null;
             }

@@ -18,6 +18,5 @@ public class ThemePersistableImpl implements Persistable {
 
     @Override
     public void persist() {
-        repositoryFactory.getRepository(theme).save(theme);
     }
 }

@@ -1,18 +1,15 @@
 package home.telegrambot.datamanagement.model;//package com.morgen.model;
 
 
-import javax.persistence.*;
-
-
-@Entity
-@Table(name="theme")
+//@Entity
+//@Table(name="theme")
 public class Theme {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name="name")
+//    @Column(name="name")
     String name;
 
     public Theme(String name) {

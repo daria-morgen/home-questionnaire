@@ -2,22 +2,20 @@ package home.telegrambot.datamanagement.model;
 
 import com.google.common.base.Objects;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name = "word")
+//@Entity
+//@Table(name = "word")
 public class Word {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "cir_name")
+//    @Column(name = "cir_name")
     private String cir_name;
 
-    @Column(name = "latin_name")
+//    @Column(name = "latin_name")
     private String latin_name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+//    @ManyToOne(cascade = CascadeType.ALL)
     private Theme theme;
 
     public Word() {

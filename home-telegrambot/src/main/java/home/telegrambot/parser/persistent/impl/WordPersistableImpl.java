@@ -4,7 +4,6 @@ import home.telegrambot.datamanagement.model.Theme;
 import home.telegrambot.datamanagement.model.Word;
 import home.telegrambot.parser.persistent.Persistable;
 import home.telegrambot.parser.persistent.RepositoryFactory;
-import org.springframework.data.repository.CrudRepository;
 
 
 public class WordPersistableImpl implements Persistable {
@@ -29,6 +28,5 @@ public class WordPersistableImpl implements Persistable {
 
     @Override
     public void persist() {
-        repositoryFactory.getRepository(word).save(word);
     }
 }
