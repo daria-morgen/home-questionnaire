@@ -107,7 +107,6 @@ public class DictionaryServiceImpl implements LibraryService {
                 }
         );
         LOGGER.info(new Date() + ": Dictionary init end. Dictionary size is: " + dictionaryMap.size());
-
     }
 
     public Mono<String> getTranslationFromEnglishWord(String st) {
@@ -131,11 +130,15 @@ public class DictionaryServiceImpl implements LibraryService {
 
     @Override
     public Mono<String> getRandomWord() {
-        String randomWord = "";
-
-//        dictionaryMap.
-
-        return Mono.just(randomWord);
+        int count = 0;
+        int random = (int) (Math.random() * dictionaryMap.size());
+        for (Map.Entry<String, String> e : dictionaryMap.entrySet()) {
+            if(count==random){
+                return Mono.just(dictionaryMap.get(e.getKey()));
+            }
+            count++;
+        }
+        return Mono.just("No random word");
     }
 
     @Override
