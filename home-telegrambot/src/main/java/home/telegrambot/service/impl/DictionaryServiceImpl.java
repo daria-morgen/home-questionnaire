@@ -112,31 +112,39 @@ public class DictionaryServiceImpl implements LibraryService {
 
     }
 
-    private String getTranslationFromEngrishWord(String st){
-        if(dictionaryMap.containsKey(st)) return dictionaryMap.get(st);
-        return "no translation";
+    public Mono<String> getTranslationFromEnglishWord(String st){
+        if(dictionaryMap.containsKey(st)) return Mono.just(dictionaryMap.get(st));
+        return Mono.just("no translation");
     }
 
-    private String getTranslationFromRussianWord(String st){
+    public Mono<String> getTranslationFromRussianWord(String st){
         if (dictionaryMap.containsValue(st)){
             for (Map.Entry<String, String> entry : dictionaryMap.entrySet()) {
                 String key = entry.getKey();
                 String value = entry.getValue();
                 if(value.equals(st)){
-                    return value;
+                    return Mono.just(value);
                 }
             }
         };
-        return "no translation";
+        return Mono.just("no translation");
     }
 
     @Override
     public Mono<String> getRandomWord() {
-        return null;
+        String randomWord="";
+
+//        dictionaryMap.
+
+        return Mono.just(randomWord);
     }
 
     @Override
     public Mono<String> getWordTranslation(String translationWord) {
-        return null;
+        if (dictionaryMap.containsValue(translationWord)){
+            return  Mono.just(dictionaryMap.get(translationWord));
+        }else {
+            return getTranslationFromRussianWord(translationWord);
+        }
     }
 }

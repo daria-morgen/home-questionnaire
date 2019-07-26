@@ -8,4 +8,5 @@ public interface LibraryService {
 
     Mono<String> getWordTranslation(String translationWord);
 
+
 }
