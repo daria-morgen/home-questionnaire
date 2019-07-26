@@ -13,6 +13,7 @@ import java.util.*;
 @Service
 public class DictionaryServiceImpl implements LibraryService {
 
+    //todo think about initialisation
     private boolean isHeadTag;
 
     private StringBuilder currentLine;

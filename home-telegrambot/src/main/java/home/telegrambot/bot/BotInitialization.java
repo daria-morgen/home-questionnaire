@@ -10,7 +10,7 @@ import org.telegram.telegrambots.TelegramBotsApi;
 
 import java.util.Date;
 
-//@Component
+@Component
 public class BotInitialization {
     private final Logger LOGGER = LoggerFactory.getLogger(BotInitialization.class);
 
