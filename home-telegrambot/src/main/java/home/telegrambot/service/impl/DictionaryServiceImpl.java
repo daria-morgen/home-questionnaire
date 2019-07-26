@@ -8,18 +8,13 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class DictionaryServiceImpl implements LibraryService {
 
-    private AppProperties properties;
-
-    private List<String> dictionaryXMLList;
     private boolean isHeadTag;
+
     private StringBuilder currentLine;
 
     private List<StringBuilder> dictionaryList;
@@ -29,12 +24,11 @@ public class DictionaryServiceImpl implements LibraryService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DictionaryServiceImpl.class);
 
     private DictionaryServiceImpl(AppProperties appProperties) {
-        this.properties=appProperties;
 
         LOGGER.info(new Date() + ": Dictionary initialization start.");
         dictionaryList = new ArrayList<>();
 
-        File file = new File(properties.getBotDictionaryFileName());
+        File file = new File(appProperties.getBotDictionaryFileName());
 
         BufferedReader br = null;
         try {
@@ -51,10 +45,8 @@ public class DictionaryServiceImpl implements LibraryService {
                     parseLine(st);
                 }else
                 {
-                    LOGGER.info(new Date() + ": Dictionary read break. Dictionary size is: " + dictionaryList.size());
                     break;
                 }
-                //dictionaryList.add(st);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -88,23 +80,54 @@ public class DictionaryServiceImpl implements LibraryService {
         if(line.contains("</ar>")){
             isHeadTag=false;
             currentLine.append(line.trim());
-            dictionaryList.add(currentLine);
+            try {
+                dictionaryList.add(currentLine.replace(currentLine.indexOf("&quot;"), currentLine.indexOf("&quot;") + 5, "").replace(currentLine.indexOf("&quot;"), currentLine.indexOf("&quot;") + 5, "")
+            );
+            }catch (IndexOutOfBoundsException e){
+                dictionaryList.add(currentLine);
+            }
+
         }
-
-
     }
 
     private void prepareDictionaryMap() {
+        dictionaryMap = new HashMap<>();
+        dictionaryList.forEach(e-> {
+                    String value=e.substring(e.indexOf("<k>")+3,e.indexOf("</k>"));
+                    String key=e
+                            .replace(e.indexOf("<ar>"),e.indexOf("</ar>"),"")
+                            .replace(0,5,"")
+                            .substring(0,e.indexOf("</ar>"));
+
+
+                    if(!key.equals("") && !value.equals("")){
+                        dictionaryMap.put(
+                                key,
+                                value
+                        );
+                    }
+                }
+                );
+        LOGGER.info(new Date() + ": Dictionary init end. Dictionary size is: " + dictionaryMap.size());
 
     }
 
-    private String getRussianWord(String st){
-
-        return st;
+    private String getTranslationFromEngrishWord(String st){
+        if(dictionaryMap.containsKey(st)) return dictionaryMap.get(st);
+        return "no translation";
     }
-    private String getEnglishWord(String st){
 
-        return st;
+    private String getTranslationFromRussianWord(String st){
+        if (dictionaryMap.containsValue(st)){
+            for (Map.Entry<String, String> entry : dictionaryMap.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                if(value.equals(st)){
+                    return value;
+                }
+            }
+        };
+        return "no translation";
     }
 
     @Override
