@@ -1,27 +1,23 @@
 package home.telegrambot.controller;
 
+import home.telegrambot.service.LibraryService;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/dictionary")
 public class DictionaryController {
 
-//    @GetMapping("/")
-//    public String getTranslate(String wordToTranslate){
-//        return Dictionary.getDictionary().getWordTranslation(wordToTranslate);
-//    }
-//
-//    @PostMapping
-//    public CompletableFuture<ModelAndView> post(){
-//        return null;
-//    }
-//
-//
-//    @GetMapping("/{wordToTranslate}")
-//    private Mono<String> getTranslateWord(@PathVariable String wordToTranslate) {
-//
-//    return null;
-//    }
+    private LibraryService libraryService;
+
+    public DictionaryController(LibraryService libraryService) {
+        this.libraryService = libraryService;
+    }
+
+    @GetMapping("/getRandomWord")
+    public Mono<String> handle() {
+        return libraryService.getRandomWord();
+    }
 
 }
 
