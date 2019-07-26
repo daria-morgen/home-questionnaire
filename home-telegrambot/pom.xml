@@ -13,6 +13,9 @@
     <groupId>home.telergrambot</groupId>
     <artifactId>home-telegrambot</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <name>home-telegrambot</name>
+    <packaging>jar</packaging>
+
 
     <dependencies>
 
