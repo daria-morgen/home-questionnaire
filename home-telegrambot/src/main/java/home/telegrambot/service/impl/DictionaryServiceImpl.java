@@ -43,8 +43,7 @@ public class DictionaryServiceImpl implements LibraryService {
                 assert br != null;
                 if (!(st = br.readLine()).trim().equals("</xdxf>")) {
                     parseLine(st);
-                }else
-                {
+                } else {
                     break;
                 }
             }
@@ -65,25 +64,24 @@ public class DictionaryServiceImpl implements LibraryService {
     }
 
 
+    private void parseLine(String line) {
 
-    private void parseLine(String line){
-
-        if (isHeadTag){
+        if (isHeadTag) {
             currentLine.append(line.trim());
         }
-        if(line.contains("<ar>")){
-            currentLine=new StringBuilder();
-            isHeadTag=true;
+        if (line.contains("<ar>")) {
+            currentLine = new StringBuilder();
+            isHeadTag = true;
             currentLine.append(line.trim());
 
         }
-        if(line.contains("</ar>")){
-            isHeadTag=false;
+        if (line.contains("</ar>")) {
+            isHeadTag = false;
             currentLine.append(line.trim());
             try {
                 dictionaryList.add(currentLine.replace(currentLine.indexOf("&quot;"), currentLine.indexOf("&quot;") + 5, "").replace(currentLine.indexOf("&quot;"), currentLine.indexOf("&quot;") + 5, "")
-            );
-            }catch (IndexOutOfBoundsException e){
+                );
+            } catch (IndexOutOfBoundsException e) {
                 dictionaryList.add(currentLine);
             }
 
@@ -92,47 +90,48 @@ public class DictionaryServiceImpl implements LibraryService {
 
     private void prepareDictionaryMap() {
         dictionaryMap = new HashMap<>();
-        dictionaryList.forEach(e-> {
-                    String value=e.substring(e.indexOf("<k>")+3,e.indexOf("</k>"));
-                    String key=e
-                            .replace(e.indexOf("<ar>"),e.indexOf("</ar>"),"")
-                            .replace(0,5,"")
-                            .substring(0,e.indexOf("</ar>"));
+        dictionaryList.forEach(e -> {
+                    String value = e.substring(e.indexOf("<k>") + 3, e.indexOf("</k>"));
+                    String key = e
+                            .replace(e.indexOf("<ar>"), e.indexOf("</ar>"), "")
+                            .replace(0, 5, "")
+                            .substring(0, e.indexOf("</ar>"));
 
 
-                    if(!key.equals("") && !value.equals("")){
+                    if (!key.equals("") && !value.equals("")) {
                         dictionaryMap.put(
                                 key,
                                 value
                         );
                     }
                 }
-                );
+        );
         LOGGER.info(new Date() + ": Dictionary init end. Dictionary size is: " + dictionaryMap.size());
 
     }
 
-    public Mono<String> getTranslationFromEnglishWord(String st){
-        if(dictionaryMap.containsKey(st)) return Mono.just(dictionaryMap.get(st));
+    public Mono<String> getTranslationFromEnglishWord(String st) {
+        if (dictionaryMap.containsKey(st)) return Mono.just(dictionaryMap.get(st));
         return Mono.just("no translation");
     }
 
-    public Mono<String> getTranslationFromRussianWord(String st){
-        if (dictionaryMap.containsValue(st)){
+    public Mono<String> getTranslationFromRussianWord(String st) {
+        if (dictionaryMap.containsValue(st)) {
             for (Map.Entry<String, String> entry : dictionaryMap.entrySet()) {
                 String key = entry.getKey();
                 String value = entry.getValue();
-                if(value.equals(st)){
+                if (value.equals(st)) {
                     return Mono.just(value);
                 }
             }
-        };
+        }
+        ;
         return Mono.just("no translation");
     }
 
     @Override
     public Mono<String> getRandomWord() {
-        String randomWord="";
+        String randomWord = "";
 
 //        dictionaryMap.
 
@@ -141,9 +140,9 @@ public class DictionaryServiceImpl implements LibraryService {
 
     @Override
     public Mono<String> getWordTranslation(String translationWord) {
-        if (dictionaryMap.containsValue(translationWord)){
-            return  Mono.just(dictionaryMap.get(translationWord));
-        }else {
+        if (dictionaryMap.containsValue(translationWord)) {
+            return Mono.just(dictionaryMap.get(translationWord));
+        } else {
             return getTranslationFromRussianWord(translationWord);
         }
     }
