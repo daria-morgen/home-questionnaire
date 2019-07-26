@@ -133,7 +133,7 @@ public class DictionaryServiceImpl implements LibraryService {
         int count = 0;
         int random = (int) (Math.random() * dictionaryMap.size());
         for (Map.Entry<String, String> e : dictionaryMap.entrySet()) {
-            if(count==random){
+            if (count == random) {
                 return Mono.just(dictionaryMap.get(e.getKey()));
             }
             count++;
