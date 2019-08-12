@@ -72,27 +72,30 @@ public class Qs {
     }
 
     public static void main(String[] args) {
-        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-
-
-        List<Register> registers = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-//            registers.add(new Register( (int)(i*Math.random()), new Date((long)(1212121212121L*Math.random())), new Date((long)(1212121212121L*Math.random()))));
-
-
-            registers.add(new Register( (int)(i*Math.random()),1,  (int)(10*Math.random())));
-        }
-
-
-        System.out.println("Было");
-        registers.forEach(e-> System.out.println("priotity: "+e.priority+", operDate: "+e.operDate+", createDate: "+e.createDate));
-
-        int low = 0;
-        int high = registers.size() - 1;
-
-        quickSort(registers, low, high);
-        System.out.println("Стало");
-        registers.forEach(e-> System.out.println("priotity: "+e.priority+", operDate: "+e.operDate+", createDate: "+e.createDate));
+//        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+//
+//
+//        List<Register> registers = new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+////            registers.add(new Register( (int)(i*Math.random()), new Date((long)(1212121212121L*Math.random())), new Date((long)(1212121212121L*Math.random()))));
+//
+//
+//            registers.add(new Register( (int)(i*Math.random()),1,  (int)(10*Math.random())));
+//        }
+//
+//
+//        System.out.println("Было");
+//        registers.forEach(e-> System.out.println("priotity: "+e.priority+", operDate: "+e.operDate+", createDate: "+e.createDate));
+//
+//        int low = 0;
+//        int high = registers.size() - 1;
+//
+//        quickSort(registers, low, high);
+//        System.out.println("Стало");
+//        registers.forEach(e-> System.out.println("priotity: "+e.priority+", operDate: "+e.operDate+", createDate: "+e.createDate));
+        int[] x = new int[]{10,24,2,23, 3,1,0,0,56,8,1};
+        quickSort(x);
+        System.out.println(Arrays.toString(x));
 
     }
 
