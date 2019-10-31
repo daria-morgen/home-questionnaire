@@ -42,11 +42,11 @@ public class MessageServiceImpl implements MessageService {
             return new EditMessageText()
                     .setChatId(update.getCallbackQuery().getMessage().getChatId())
                     .setMessageId(toIntExact(update.getCallbackQuery().getMessage().getMessageId()))
-                    .setText("Not right =(");
+                    .setText("Not right =( "+update.getCallbackQuery().getMessage().getText()+" != "+update.getCallbackQuery().getData());
         return new EditMessageText()
                 .setChatId(update.getCallbackQuery().getMessage().getChatId())
                 .setMessageId(toIntExact(update.getCallbackQuery().getMessage().getMessageId()))
-                .setText("Right!");
+                .setText("Right! "+update.getCallbackQuery().getMessage().getText()+" = "+ libraryService.getWordTranslation(update.getCallbackQuery().getMessage().getText()).block());
 
     }
 

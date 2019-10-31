@@ -13,6 +13,7 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import java.util.Date;
 
 @Component
+@EnableScheduling
 public class BotInitialization {
     private final Logger LOGGER = LoggerFactory.getLogger(BotInitialization.class);
 
@@ -36,6 +37,12 @@ public class BotInitialization {
 
         LOGGER.info(new Date()+": Bot initialization end.");
 
+    }
+
+    @Scheduled(fixedDelay = 20000)
+    private void shcedul(){
+        LOGGER.info(new Date()+" - scheduler message");
+        bot.sendMsgs();
     }
 
 }
