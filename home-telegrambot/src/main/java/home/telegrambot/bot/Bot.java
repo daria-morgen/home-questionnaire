@@ -53,28 +53,14 @@ public class Bot extends TelegramLongPollingBot {
                     chatIdsList.add(update.getMessage().getChatId().toString());
                 }
 
-                long chat_id = update.getMessage().getChatId();
+                SendMessage message = InlineKeyboardBuilder.create(update.getMessage().getChatId())
+                        .setText(messageService.getStringRequest(""))
+                        .row()
+                        .button("translate 1", "translate-1")
+                        .button("translate 2", "translate-2")
+                        .endRow()
+                        .build();
 
-                    SendMessage message = new SendMessage() // Create a message object object
-                            .setChatId(chat_id)
-                            .setText(messageService.getStringRequest(""));
-                    InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
-                    List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
-                    List<InlineKeyboardButton> rowInline = new ArrayList<>();
-                    rowInline.add(new InlineKeyboardButton().setText("translate").setCallbackData("update_msg_text"));
-//                     Set the keyboard to the markup
-                    rowsInline.add(rowInline);
-                    // Add it to the message
-                    markupInline.setKeyboard(rowsInline);
-                    message.setReplyMarkup(markupInline);
-
-//                SendMessage message = InlineKeyboardBuilder.create(update.getMessage().getChatId())
-//                        .setText(messageService.getStringRequest(""))
-//                        .row()
-//                        .button("translate 1", "translate-1")
-//                        .button("translate 2", "translate-2")
-//                        .endRow()
-//                        .build();
                     try {
                         execute(message); // Sending our message object to user
                     } catch (TelegramApiException e) {
@@ -119,7 +105,7 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     public static Bot getBot(String botUsername, String botToken
-            , MessageService messageService, String host, int port, int timeout
+            , MessageService messageService
     ) {
         return new Bot(botUsername, botToken, messageService);
     }
