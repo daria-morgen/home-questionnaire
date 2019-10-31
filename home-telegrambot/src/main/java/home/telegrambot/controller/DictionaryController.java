@@ -16,7 +16,7 @@ public class DictionaryController {
 
     @GetMapping("/getRandomWord")
     public Mono<String> handle() {
-        return libraryService.getRandomWord();
+        return libraryService.getRandomEnglishWord();
     }
 
 }

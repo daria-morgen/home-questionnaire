@@ -13,16 +13,12 @@ import java.util.*;
 @Service
 public class DictionaryServiceImpl implements LibraryService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(DictionaryServiceImpl.class);
     //todo think about initialisation
     private boolean isHeadTag;
-
     private StringBuilder currentLine;
-
     private List<StringBuilder> dictionaryList;
-
     private Map<String, String> dictionaryMap;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(DictionaryServiceImpl.class);
 
     private DictionaryServiceImpl(AppProperties appProperties) {
 
@@ -64,7 +60,6 @@ public class DictionaryServiceImpl implements LibraryService {
 
     }
 
-
     private void parseLine(String line) {
 
         if (isHeadTag) {
@@ -88,7 +83,6 @@ public class DictionaryServiceImpl implements LibraryService {
 
         }
     }
-
     private void prepareDictionaryMap() {
         dictionaryMap = new HashMap<>();
         dictionaryList.forEach(e -> {
@@ -110,44 +104,38 @@ public class DictionaryServiceImpl implements LibraryService {
         LOGGER.info(new Date() + ": Dictionary init end. Dictionary size is: " + dictionaryMap.size());
     }
 
-    public Mono<String> getTranslationFromEnglishWord(String st) {
-        if (dictionaryMap.containsKey(st)) return Mono.just(dictionaryMap.get(st));
-        return Mono.just("no translation");
-    }
-
     public Mono<String> getTranslationFromRussianWord(String st) {
         if (dictionaryMap.containsValue(st)) {
             for (Map.Entry<String, String> entry : dictionaryMap.entrySet()) {
-                String key = entry.getKey();
                 String value = entry.getValue();
                 if (value.equals(st)) {
                     return Mono.just(value);
                 }
             }
         }
-        ;
+
         return Mono.just("no translation");
     }
 
     @Override
-    public Mono<String> getRandomWord() {
-        int count = 0;
-        int random = (int) (Math.random() * dictionaryMap.size());
-        for (Map.Entry<String, String> e : dictionaryMap.entrySet()) {
-            if (count == random) {
-                return Mono.just(e.getKey());
-            }
-            count++;
-        }
-        return Mono.just("No random word");
+    public Mono<String> getRandomRussianWord() {
+        List<String> keys = new ArrayList<String>(dictionaryMap.keySet());
+        return Mono.just(dictionaryMap.get(keys.get(new Random().nextInt(keys.size()))));
+    }
+
+    @Override
+    public Mono<String> getRandomEnglishWord() {
+        List<String> keys = new ArrayList<String>(dictionaryMap.keySet());
+        return Mono.just(keys.get(new Random().nextInt(keys.size())));
     }
 
     @Override
     public Mono<String> getWordTranslation(String translationWord) {
-        if (dictionaryMap.containsValue(translationWord)) {
+        if (dictionaryMap.containsKey(translationWord)) {
             return Mono.just(dictionaryMap.get(translationWord));
         } else {
             return getTranslationFromRussianWord(translationWord);
         }
     }
+
 }
