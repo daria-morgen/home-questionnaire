@@ -1,8 +1,8 @@
 package home.telegrambot.bot;
 
-import org.telegram.telegrambots.api.methods.send.SendMessage;
-import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,8 @@ public class InlineKeyboardBuilder {
     private List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
     private List<InlineKeyboardButton> row = null;
 
-    private InlineKeyboardBuilder() {}
+    private InlineKeyboardBuilder() {
+    }
 
     public static InlineKeyboardBuilder create() {
         InlineKeyboardBuilder builder = new InlineKeyboardBuilder();

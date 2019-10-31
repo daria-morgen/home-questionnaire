@@ -5,10 +5,19 @@ import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.telegram.telegrambots.api.methods.send.SendMessage;
-import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.exceptions.TelegramApiException;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
+import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import static java.lang.Math.toIntExact;
 
 
 public class Bot extends TelegramLongPollingBot {
@@ -23,38 +32,81 @@ public class Bot extends TelegramLongPollingBot {
 
     private MessageService messageService;
 
-    /**
-     * Метод для приема сообщений.
-     * @param update Содержит сообщение от пользователя.
-     */
+    private List<String> chatIdsList = new ArrayList<>();
+
+    private Bot(String botUsername, String botToken, MessageService messageService) {
+        this.botUsername = botUsername;
+        this.botToken = botToken;
+        this.messageService = messageService;
+    }
+
+    @Override
+    public void onUpdatesReceived(List<Update> updates) {
+
+        updates.forEach(update->{
+            if (update.hasMessage() && update.getMessage().hasText()) {
+                if(chatIdsList.contains(update.getMessage().getChatId().toString())) {
+                    LOGGER.info("Added new chat id: " + update.getMessage().getChatId().toString()
+                            + ", author : " + update.getMessage().getAuthorSignature()
+                            + ", message id: " + update.getMessage().getMessageId().toString());
+
+                    chatIdsList.add(update.getMessage().getChatId().toString());
+                }
+
+                long chat_id = update.getMessage().getChatId();
+
+                    SendMessage message = new SendMessage() // Create a message object object
+                            .setChatId(chat_id)
+                            .setText(messageService.getStringRequest(""));
+                    InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+                    List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+                    List<InlineKeyboardButton> rowInline = new ArrayList<>();
+                    rowInline.add(new InlineKeyboardButton().setText("translate").setCallbackData("update_msg_text"));
+//                     Set the keyboard to the markup
+                    rowsInline.add(rowInline);
+                    // Add it to the message
+                    markupInline.setKeyboard(rowsInline);
+                    message.setReplyMarkup(markupInline);
+
+//                SendMessage message = InlineKeyboardBuilder.create(update.getMessage().getChatId())
+//                        .setText(messageService.getStringRequest(""))
+//                        .row()
+//                        .button("translate 1", "translate-1")
+//                        .button("translate 2", "translate-2")
+//                        .endRow()
+//                        .build();
+                    try {
+                        execute(message); // Sending our message object to user
+                    } catch (TelegramApiException e) {
+                        e.printStackTrace();
+                    }
+
+            } else if (update.hasCallbackQuery()) {
+
+                String answer = update.getCallbackQuery().getData();
+
+                long message_id = update.getCallbackQuery().getMessage().getMessageId();
+                long chat_id = update.getCallbackQuery().getMessage().getChatId();
+
+                if (answer.equals("translate-1")) {
+                    String result = "wrong";
+                    EditMessageText new_message = new EditMessageText()
+                            .setChatId(chat_id)
+                            .setMessageId(toIntExact(message_id))
+                            .setText(result);
+                    try {
+                        execute(new_message);
+                    } catch (TelegramApiException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
     @Override
     public void onUpdateReceived(Update update) {
-        LOGGER.info("author : "+update.getMessage().getAuthorSignature());
-        LOGGER.info("chat id: "+update.getMessage().getChatId().toString());
-        LOGGER.info("message id: "+update.getMessage().getMessageId().toString());
-        String message = update.getMessage().getText();
-        sendMsg(update.getMessage().getChatId().toString(), message);
-
     }
-
-    /**
-     * Метод для настройки сообщения и его отправки.
-     * @param chatId id чата
-     * @param s Строка, которую необходимот отправить в качестве сообщения.
-     */
-    public synchronized void sendMsg(String chatId, String s) {
-
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.enableMarkdown(true);
-        sendMessage.setChatId(chatId);
-        sendMessage.setText(messageService.getStringRequest(s));
-        try {
-            sendMessage(sendMessage);
-        } catch (TelegramApiException e) {
-//            log.log(Level.SEVERE, "Exception: ", e.toString());
-        }
-    }
-
 
     @Override
     public String getBotUsername() {
@@ -67,22 +119,8 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     public static Bot getBot(String botUsername, String botToken
-            ,MessageService messageService, String host, int port, int timeout
-    ){
-        Bot bot = new Bot();
-
-        RequestConfig requestConfig = RequestConfig.custom()
-                .setProxy(new HttpHost(host, port))
-                        .setSocketTimeout(timeout)
-                        .setConnectionRequestTimeout(timeout)
-                        .setConnectTimeout(timeout)
-                        .build();
-
-        bot.getOptions().setRequestConfig(requestConfig);
-
-        bot.botUsername=botUsername;
-        bot.botToken=botToken;
-        bot.messageService=messageService;
-        return bot;
+            , MessageService messageService, String host, int port, int timeout
+    ) {
+        return new Bot(botUsername, botToken, messageService);
     }
 }

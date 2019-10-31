@@ -27,7 +27,7 @@ public class BotMessageParser implements MessageParser {
                 .map(String::new)
                 .collect(Collectors.toList());
 
-        LOGGER.info("Count in message array: "+megs.size());
+//        LOGGER.info("Count in message array: "+megs.size());
 
         if(megs.size()!=0) {
 

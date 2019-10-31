@@ -21,7 +21,7 @@ public class MessageServiceImpl implements MessageService {
     //todo think about parser
     public String manageMessage(String message){
         messageParser.parse(message);
-        return libraryService.getRandomWord().toString();
+        return libraryService.getRandomWord().block();
     }
 
     public String getStringRequest(String message){

@@ -43,7 +43,7 @@
         <dependency>
             <groupId>org.telegram</groupId>
             <artifactId>telegrambots</artifactId>
-            <version>3.5</version>
+            <version>4.0.0</version>
         </dependency>
 
 <!--        <dependency>-->
