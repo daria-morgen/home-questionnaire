@@ -10,10 +10,10 @@
         <version>2.1.6.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>home.telergrambot</groupId>
-    <artifactId>home-telegrambot</artifactId>
+    <groupId>home.questionnaire</groupId>
+    <artifactId>home-questionnaire</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>home-telegrambot</name>
+    <name>home-questionnaire</name>
     <packaging>jar</packaging>
 
 
