@@ -13,7 +13,7 @@
         <!--<appender-ref ref="STDOUT" />-->
     <!--</logger>-->
 
-    <logger name="home.telegrambot" level="debug" additivity="false">
+    <logger name="home.questionnaire" level="debug" additivity="false">
         <appender-ref ref="STDOUT" />
     </logger>
 
