@@ -1,0 +1,22 @@
+Добавляем в автозапуск при старте системы Mac OS.
+brew services start postgresql
+Перезагрузка PostgreSQL
+brew services restart postgresql
+
+Подключение на Mac OS немного отличается от Linux. Проверим пользователей:
+psql -l
+Для подключения указываем Owner из таблицы выше:
+sudo psql -U Dream -d postgres
+
+Директория автозагрузки находится здесь:
+
+~/Library/LaunchAgents
+Создаем симлинк
+
+ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
+Добавляем в автозагрузку
+
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+
+
+localhost:5432
