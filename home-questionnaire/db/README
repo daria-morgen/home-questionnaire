@@ -18,5 +18,38 @@ ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
 
 launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
 
-
 localhost:5432
+
+createdb questionnaire
+psql questionnaire
+SELECT version();
+
+help
+\h
+To get out of psql, type:
+\q
+
+CREATE TABLE owner (
+    id SERIAL PRIMARY KEY NOT NULL,
+    name text NOT NULL
+);
+
+CREATE TABLE questionnaire (
+    id SERIAL PRIMARY KEY NOT NULL,
+    name text,
+    owner_id integer REFERENCES owner (id),
+    password text
+);
+
+CREATE TABLE question (
+    id SERIAL PRIMARY KEY NOT NULL,
+    name text,
+    questionnaire_id integer REFERENCES questionnaire (id)
+);
+
+CREATE TABLE answer (
+    id SERIAL PRIMARY KEY NOT NULL,
+    name text,
+    question_id integer REFERENCES question (id),
+    right_answer boolean
+);

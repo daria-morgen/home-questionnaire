@@ -3,8 +3,8 @@ package home.questionnaire.db.data.domain;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "owner")
+public class Owner {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

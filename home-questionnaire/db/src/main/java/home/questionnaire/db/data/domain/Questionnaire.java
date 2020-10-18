@@ -14,8 +14,8 @@ public class Questionnaire {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "owner_id")
+    private Owner owner;
 
     @Column
     private String password;

@@ -17,6 +17,6 @@ public class Answer {
     @JoinColumn(name = "question_id")
     private Question question;
 
-    @Column
+    @Column(name = "right_answer")
     private boolean rightAnswer;
 }
