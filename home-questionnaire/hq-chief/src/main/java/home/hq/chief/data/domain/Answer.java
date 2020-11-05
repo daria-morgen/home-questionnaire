@@ -1,10 +1,11 @@
-package home.questionnaire.db.data.domain;
+package home.hq.chief.data.domain;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "question")
-public class Question {
+@Table(name = "answer")
+public class Answer {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -13,7 +14,9 @@ public class Question {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "questionnaire_id")
-    private Questionnaire questionnaire;
+    @JoinColumn(name = "question_id")
+    private Question question;
 
+    @Column(name = "right_answer")
+    private boolean rightAnswer;
 }

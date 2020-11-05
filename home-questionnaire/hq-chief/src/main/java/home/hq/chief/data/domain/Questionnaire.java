@@ -1,10 +1,10 @@
-package home.questionnaire.db.data.domain;
+package home.hq.chief.data.domain;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "answer")
-public class Answer {
+@Table(name = "questionnaire")
+public class Questionnaire {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,9 +14,10 @@ public class Answer {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "question_id")
-    private Question question;
+    @JoinColumn(name = "owner_id")
+    private Owner owner;
 
-    @Column(name = "right_answer")
-    private boolean rightAnswer;
+    @Column
+    private String password;
+
 }

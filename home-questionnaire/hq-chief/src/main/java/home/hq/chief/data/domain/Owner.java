@@ -1,4 +1,4 @@
-package home.questionnaire.db.data.domain;
+package home.hq.chief.data.domain;
 
 import javax.persistence.*;
 

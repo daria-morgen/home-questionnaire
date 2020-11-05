@@ -78,6 +78,7 @@ public class DictionaryParserImpl implements DictionaryParser {
 
         }
     }
+
     private void prepareDictionaryMap() {
         dictionaryMap = new HashMap<>();
         dictionaryList.forEach(e -> {
@@ -96,5 +97,5 @@ public class DictionaryParserImpl implements DictionaryParser {
                     }
                 }
         );
-         }
+    }
 }

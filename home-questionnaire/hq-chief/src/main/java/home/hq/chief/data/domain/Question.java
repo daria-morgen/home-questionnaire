@@ -1,11 +1,10 @@
-package home.questionnaire.db.data.domain;
+package home.hq.chief.data.domain;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "questionnaire")
-public class Questionnaire {
-
+@Table(name = "question")
+public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -14,10 +13,7 @@ public class Questionnaire {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "owner_id")
-    private Owner owner;
-
-    @Column
-    private String password;
+    @JoinColumn(name = "questionnaire_id")
+    private Questionnaire questionnaire;
 
 }
